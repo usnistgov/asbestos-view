@@ -1,6 +1,6 @@
 <template>
     <div>
-   Welcome to Foo
+   Foo Child
     </div>
 </template>
 

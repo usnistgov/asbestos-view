@@ -1,6 +1,6 @@
 <template>
     <div>
-   Welcome to Bar
+   Bar Child
     </div>
 </template>
 

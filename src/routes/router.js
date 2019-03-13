@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import FooPage from "@/components/FooPage.vue";
 import BarPage from "@/components/BarPage.vue";
 import TopLayout from "../components/TopLayout";
+import TestPanel from '@/components/TestPanel.vue'
+
 
 Vue.use( VueRouter )
 
@@ -23,6 +25,10 @@ export const routes = [
                 path: 'bar',
                 name: 'bar',
                 component: BarPage
+            },
+            {
+                path: 'test/:id',
+                component: TestPanel
             }
         ]
     }
