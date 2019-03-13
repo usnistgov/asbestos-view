@@ -1,19 +1,18 @@
 <template>
   <div id="app">
-    <top-layout></top-layout>
+    <h1>My App</h1>
+
     <router-view></router-view>
+
   </div>
 </template>
 
 <script>
-import TopLayout from "./components/TopLayout"
+
 import {router} from "./routes/router.js"
 
 export default {
   name: 'app',
-  components: {
-    TopLayout
-  },
   router: router
 }
 </script>

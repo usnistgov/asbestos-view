@@ -2,6 +2,7 @@
     <div>
       <h1>Top Layout</h1>
         <NavigationPage></NavigationPage>
+        <router-view></router-view>
     </div>
 </template>
 
