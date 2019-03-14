@@ -1,21 +1,17 @@
 <template>
     <div class="main">
         <div class="nav">
-        <h2>Navigation</h2>
-            <router-link to="/foo">Go to Foo</router-link>
-            /
-            <router-link to="/bar">Go to Bar</router-link>
+            <h2>Navigation</h2>
 
             <div v-for="testId in testIds" :key="testId.id">
-                <br/>
-                <router-link v-bind:to="testUrl(testId.testId)">Test {{testId.testId}}</router-link>
+                <router-link class="nav-list-item" v-bind:to="testUrl(testId.testId)">Test {{testId.testId}}</router-link>
             </div>
         </div>
+        <router-view class="body" name="testPanel"></router-view>
     </div>
 </template>
 
 <script>
-
     export default {
         data() {
             return {
@@ -45,14 +41,27 @@
         grid-template-columns: 20% 80%;
         grid-template-areas: 'nav body';
     }
+
     .nav {
         text-align: left;
         align-content: start;
         grid-area: nav;
     }
+
     .body {
         text-align: left;
         align-content: start;
         grid-area: body;
+    }
+
+    .router-link-active {
+        background-color: lightblue;
+    }
+
+    a:link {
+        text-decoration: none;
+    }
+    .nav-list-item {
+        line-height: 1.5;
     }
 </style>
