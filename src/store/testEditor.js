@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {newTest} from '../types/test'
+import {newTest} from "../types/test"
 
 
 Vue.use(Vuex)
@@ -14,7 +14,7 @@ export const testEditorStore =
             return newTest()
         },
         mutations: {
-            addTestVariable(state: any, variable: any) {
+            addTestVariable(state, variable) {
 
                 if (!variable.name) {
                     let id = idCounter++
@@ -25,16 +25,16 @@ export const testEditorStore =
 
                 state.variables.push(variable)
             },
-            delTestVariable(state: any, id: string) {
-                state.variables = state.variables.filter( function (variable: any) {
+            delTestVariable(state, id) {
+                state.variables = state.variables.filter( function (variable) {
                     return variable.id !== id
                 })
             }
         },
 
         getters: {
-            variableIndexById: (state: any) =>  (id: string) => {
-                return state.variables.findIndex(function (variable: any) {
+            variableIndexById: (state) =>  (id) => {
+                return state.variables.findIndex(function (variable) {
                     return variable.id === id
                 })
             }

@@ -5,8 +5,12 @@
                 Test Definitions
             </div>
 
-            <div v-for="testId in testIds" :key="testId.id">
-                <router-link class="nav-list-item" v-bind:to="testUrl(testId.testId)">Test {{testId.testId}}</router-link>
+            <div v-for="testId in $store.state.base.testIds" :key="testId.id">
+                <img v-if="testOpen(testId.id)" src="../assets/arrow-down.png">
+                <img v-else src="../assets/arrow-right.png">
+                <router-link class="nav-list-item" v-bind:to="testUrl(testId.name)">
+                    Test {{testId.name}}
+                </router-link>
             </div>
         </div>
         <router-view class="body" name="testPanel"></router-view>
@@ -14,29 +18,49 @@
 </template>
 
 <script>
+    import {newTest} from "../types/test";
+
     export default {
         data() {
             return {
-                testIds: [
-                    {
-                        id: '1',
-                        testId: '11937'
-                    },
-                    {
-                        id: '2',
-                        testId: '20000'
-                    },
-                    {
-                        id: '3',
-                        testId: '28001'
-                    }
-                ]
+                openTestId: null
             }
         },
-        name: 'Navigation',
+        name: 'ToolBody',
+        mounted() {
+          this.loadTests()
+        },
         methods: {
             testUrl(id) {
                 return '/test/' + id
+            },
+            loadTests() {
+                const testIds = [
+                    {
+                        id: '1',
+                        name: '11937'
+                    },
+                    {
+                        id: '2',
+                        name: '20000'
+                    },
+                    {
+                        id: '3',
+                        name: '28001'
+                    }
+                    ]
+                this.$store.commit('installTestIds', testIds)
+                const test = newTest()
+                test.id = '1'
+                test.name = '11937'
+                this.$store.commit('installTest', test)
+                this.openTestId = '1'
+            },
+            testLoaded(name) {
+                return this.$store.getters.testIndexByName(name) !== -1
+            },
+            testOpen(id) {
+                return this.openTestId && this.openTestId === id
             }
         }
     }
