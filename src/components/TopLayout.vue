@@ -1,18 +1,18 @@
 <template>
     <div>
-      <h1>Top Layout</h1>
-        <NavigationPage></NavigationPage>
+      <div>Top Layout</div>
+        <ToolBody></ToolBody>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
 
-    import NavigationPage from "@/components/NavigationPage.vue"
+    import ToolBody from "@/components/ToolBody.vue"
     export default {
         name: 'TopLayout',
         components: {
-            NavigationPage
+            ToolBody
         }
     }
 </script>

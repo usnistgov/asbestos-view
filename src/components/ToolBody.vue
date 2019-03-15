@@ -1,7 +1,9 @@
 <template>
     <div class="main">
         <div class="nav">
-            <h2>Navigation</h2>
+            <div class="test-defs-header">
+                Test Definitions
+            </div>
 
             <div v-for="testId in testIds" :key="testId.id">
                 <router-link class="nav-list-item" v-bind:to="testUrl(testId.testId)">Test {{testId.testId}}</router-link>
@@ -23,6 +25,10 @@
                     {
                         id: '2',
                         testId: '20000'
+                    },
+                    {
+                        id: '3',
+                        testId: '28001'
                     }
                 ]
             }
@@ -40,18 +46,25 @@
         display: grid;
         grid-template-columns: 20% 80%;
         grid-template-areas: 'nav body';
+        grid-gap: 0px;
+    }
+
+    .test-defs-header {
+        font-weight: bold;
     }
 
     .nav {
         text-align: left;
         align-content: start;
         grid-area: nav;
+        border: 1px solid black;
     }
 
     .body {
         text-align: left;
         align-content: start;
         grid-area: body;
+        border: 1px solid black;
     }
 
     .router-link-active {
