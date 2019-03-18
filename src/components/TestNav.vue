@@ -1,11 +1,11 @@
 <template>
     <div>
       <div>Head</div>
-        <div>Fixtures</div>
+        <test-part-nav :testId="id" type="fixtures"></test-part-nav>
         <test-part-nav :testId="id" type="variables"></test-part-nav>
-        <div>Setup</div>
-        <div>Test</div>
-        <div>Teardown</div>
+        <test-part-nav :testId="id" type="setups"></test-part-nav>
+        <test-part-nav :testId="id" type="tests"></test-part-nav>
+        <test-part-nav :testId="id" type="teardowns"></test-part-nav>
     </div>
 </template>
 <script>

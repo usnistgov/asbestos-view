@@ -2,7 +2,7 @@
     <div>
         <img v-if="open" src="../assets/arrow-down.png" @click="closeIt">
         <img v-else src="../assets/arrow-right.png" @click="openIt">
-        {{ capitalize(type) }}
+        {{ capitalize(type) }} <span style="color:blue; font-size: 0.8em"> ({{ count }})</span>
         <div v-if="open">
             <div v-for="element in elements(testId, type)" :key="element.id">
                 <div class="element-nav">
@@ -24,6 +24,11 @@
             'testId',
             'type' // element of test - head, variable, setup,  teardown
             ],
+        computed: {
+            count() {
+                return this.elements(this.testId, this.type).length
+            }
+        },
         methods: {
             capitalize(it) {
                 return it.charAt(0).toUpperCase() + it.slice(1)
