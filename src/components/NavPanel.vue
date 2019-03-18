@@ -20,7 +20,7 @@
     export default {
         data() {
             return {
-                openTestIds: ['3', '2']
+                openTestIds: []
             }
         },
         components: { TestNav },

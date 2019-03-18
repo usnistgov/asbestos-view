@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import {newTest} from "../types/test";
+    import {newTest, newTestEle} from "../types/test";
     import NavPanel from "./NavPanel";
 
 
@@ -38,11 +38,19 @@
                         name: '28001'
                     }
                 ]
+                this.$store.commit('clearTests')
                 this.$store.commit('installTestIds', testIds)
-                const test = newTest()
-                test.id = '1'
-                test.name = '11937'
-                this.$store.commit('installTest', test)
+                for (var testId of testIds) {
+                    let test = newTest()
+                    test.id = testId.id
+                    test.name = testId.name
+                    this.$store.commit('installTest', test)
+
+                    const variable = newTestEle()
+                    variable.name = 'Variable One'
+                    variable.id = '1'
+                    this.$store.commit('installTestVariable', { testId: testId.id, variable: variable })
+                }
             }
         }
     }

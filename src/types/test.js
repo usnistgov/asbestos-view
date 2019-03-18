@@ -2,11 +2,21 @@ export function newTest () {
     return {
         id: null,
         name: null,
-        head: [],
+        heads: [],
         fixtures: [],
         variables: [],
-        setup: [],
-        test: [],
-        teardown: []
+        setups: [],
+        tests: [],
+        teardowns: []
     }
 }
+
+export function newTestEle () {
+    // varaible, test, etc.
+    return {
+        id: null,
+        name: null,
+        content: null
+    }
+}
+

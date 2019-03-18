@@ -13,9 +13,14 @@ export const routes = [
         component: TopLayout,
         children: [
             {
-                path: 'test/:id',
+                path: 'test/:testId',
                 components: {
-                    testPanel: TestPanel
+                    testPanel: TestPanel,
+                    children: [
+                        {
+                            path: 'variable/:variableId'
+                        }
+                    ]
                 }
             }
         ]
