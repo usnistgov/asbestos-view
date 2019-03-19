@@ -3,8 +3,7 @@
         <div class="nav">
             <nav-panel></nav-panel>
         </div>
-        <router-view class="body" name="testPanel"></router-view>
-        <router-view class="body" name="variableEdit"></router-view>
+        <router-view class="body" name="panel"></router-view>
     </div>
 </template>
 

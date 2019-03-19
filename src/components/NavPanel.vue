@@ -7,7 +7,7 @@
         <div v-for="testId in $store.state.base.testIds" :key="testId.id">
             <img v-if="openTestIds.includes(testId.id)" src="../assets/arrow-down.png" @click="close(testId.id)">
             <img v-else src="../assets/arrow-right.png" @click="open(testId.id)">
-            <router-link class="nav-list-item" v-bind:to="testUrl(testId.name)">
+            <router-link class="nav-list-item" v-bind:to="testUrl(testId.id)">
                 Test {{testId.name}}
             </router-link>
             <test-nav class="test-nav" :id="testId.id" v-if="openTestIds.includes(testId.id)"></test-nav>

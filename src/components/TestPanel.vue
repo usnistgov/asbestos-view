@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>This is Test {{ $route.params.testId }}</h2>
+    variableId is {{ $route.params.variableId }}
   </div>
 </template>
 <script>

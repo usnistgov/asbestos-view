@@ -38,7 +38,7 @@
         },
         methods: {
             variableUrl(id) {
-                return this.testId + '/variable/' + id
+                return '/test/' + this.testId + '/variable/' + id
             },
             addNewThingToTest() {
                 // The type of thing is this.type

@@ -9,26 +9,44 @@ Vue.use( VueRouter )
 
 export const routes = [
     {
-        path: '/',
-        name: 'topLayout',
-        component: TopLayout,
+        path: '/', component: TopLayout,
         children: [
-            {
-                path: 'test/:testId',
-                components: {
-                    testPanel: TestPanel,
-                    children: [
-                        {
-                            path: '/variable/:variableId',
-                            components: {
-                                VariableEdit
-                            }
-                        }
-                    ]
-                }
+            {  // panel ties component to router-view name in ToolBody
+                path: 'test/:testId', components: { panel: TestPanel },
+                children: [
+                    {
+                        path: 'variable/:variableId',
+                        components:
+                            {
+                                panel: VariableEdit,
+                            },
+
+                    }
+                ]
             }
         ]
     }
+    // {
+    //     path: '/',
+    //     name: 'topLayout',
+    //     component: TopLayout,
+    //     children: [
+    //         {
+    //             path: 'test/:testId',
+    //             components: {
+    //                 testPanel: TestPanel,
+    //                 children: [
+    //                     {
+    //                         path: '/variable/:variableId',
+    //                         components: {
+    //                             VariableEdit
+    //                         }
+    //                     }
+    //                 ]
+    //             }
+    //         }
+    //     ]
+    // }
 ]
 
 export const router = new VueRouter({
