@@ -1,24 +1,24 @@
 <template>
   <div>
-    <h3>Variables</h3>
+    <h3>Variable {{ $route.params.variableId }}</h3>
   <div class="window">
-    <div class="selectors-group">
-      <img src="../../assets/add-button.png" v-on:click="createVariable">
-      <img v-if="this.$store.state.testEditor.variables" src="../../assets/exclude-button-red.png" v-on:click="deleteVariable">
-      <div v-if="this.$store.state.testEditor.variables === 0">
-        No Variables Defined
-      </div>
-      <div v-else>
-        <div v-for="variable in this.$store.state.testEditor.variables">
-          <span v-if="variable.validates">
-            <button class="selector" @click="select(variable.id)">{{ variable.name }}</button>
-          </span>
-          <span v-else>
-            <button class="selector haserror" @click="select(variable.id)">{{ variable.name }}</button>
-          </span>
-        </div>
-      </div>
-    </div>
+    <!--<div class="selectors-group">-->
+      <!--<img src="../../assets/add-button.png" v-on:click="createVariable">-->
+      <!--<img v-if="this.$store.state.testEditor.variables" src="../../assets/exclude-button-red.png" v-on:click="deleteVariable">-->
+      <!--<div v-if="this.$store.state.testEditor.variables === 0">-->
+        <!--No Variables Defined-->
+      <!--</div>-->
+      <!--<div v-else>-->
+        <!--<div v-for="variable in this.$store.state.testEditor.variables">-->
+          <!--<span v-if="variable.validates">-->
+            <!--<button class="selector" @click="select(variable.id)">{{ variable.name }}</button>-->
+          <!--</span>-->
+          <!--<span v-else>-->
+            <!--<button class="selector haserror" @click="select(variable.id)">{{ variable.name }}</button>-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
     <form class="grid-container" v-if="currentId">
 
       <div class="grid-status">{{ current.nameErr }}</div>
@@ -89,25 +89,28 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import { mapMutations } from 'vuex'
-import {store} from "../../store"
+import {store} from "../store"
 
 export default {
   data () {
     return {
-      currentId: null, // current variable id
+      current: null,   // Variable being edited
+
+      // should not be  used anymore
+      currentId: true, // current variable id
       currentIndex: null  // current variable index
     }
   },
   store: store,
-  props: ['testContent'], // defined in TestApp
+  props: ['testContent'],
   mounted() {
   },
   computed: {
-    current () {
-      return this.$store.state.testEditor.variables[this.currentIndex]
-    }
+    // current () {
+    //   return this.$store.state.testEditor.variables[this.currentIndex]
+    // }
   },
   methods: {
     ...mapMutations({
@@ -115,80 +118,80 @@ export default {
       delVariable: 'delTestVariable'
     }),
     clearErrors () {
-      if (!this.currentId) {
-        return
-      }
-      console.log('current is ' + this.currentIndex)
-      let variable = this.$store.state.testEditor.variables[this.currentIndex]
-      variable.nameErr = null
-      variable.expressionErr = null
-      variable.validates = true
+      // if (!this.currentId) {
+      //   return
+      // }
+      // console.log('current is ' + this.currentIndex)
+      // let variable = this.$store.state.testEditor.variables[this.currentIndex]
+      this.current.nameErr = null
+      this.current.expressionErr = null
+      this.current.validates = true
     },
     validate () {
-      if (!this.currentId) {
-        return
-      }
+      // if (!this.currentId) {
+      //   return
+      // }
       this.clearErrors()
-      let variable = this.$store.state.testEditor.variables[this.currentIndex]
-      if (!variable.name) {
-        variable.nameErr = 'Name required'
-        variable.validates = false
+      // let variable = this.$store.state.testEditor.variables[this.currentIndex]
+      if (!this.current.name) {
+        this.current.nameErr = 'Name required'
+        this.current.validates = false
       }
-      if (variable.name && variable.name.startsWith('#')) {
-        variable.nameErr = 'Enter real name'
-        variable.validates = false
+      if (this.current.name && this.current.name.startsWith('#')) {
+        this.current.nameErr = 'Enter real name'
+        this.current.validates = false
       }
       let count = 0
-      if (variable.expression) {
+      if (this.current.expression) {
         count++
       }
-      if (variable.headerField) {
+      if (this.current.headerField) {
         count++
       }
-      if (variable.path) {
+      if (this.current.path) {
         count++
       }
       if (count > 1) {
-        variable.expressionErr = 'Only one of expression, headerField, or path may be defined'
+        this.current.expressionErr = 'Only one of expression, headerField, or path may be defined'
       } else if (count == 0) {
-        variable.expressionErr = 'One of expression, headerField, or path must be defined'
+        this.current.expressionErr = 'One of expression, headerField, or path must be defined'
       } else {
-        variable.expressionErr = null
+        this.current.expressionErr = null
       }
-      if (variable.expressionErr) { variable.validates = false }
+      if (this.current.expressionErr) { this.current.validates = false }
     },
 
-    createVariable () {
-      this.addVariable(this.newVariable())
-      this.validate()
-    },
-    deleteVariable () {
-      this.delVariable(this.currentId)
-      this.select(null)
-    },
-    find (id) {
-      return this.$store.state.testEditor.variables.filter(function (variable: any) {
-        return variable.id === id
-      })
-    },
-    findByName (name) {
-      if (this.$store.state.variables) { // called before initialization complete
-        let i
-        for (i = 0; i < this.$store.state.variables.length; i++) {
-          if (this.$store.state.variables[i].name === name) {
-            return i
-          }
-        }
-      }
-      return null
-    },
-    select (id) {
-      this.currentId = id
-      this.currentIndex = (id) ? this.$store.getters.variableIndexById(this.currentId) : null
-      if (this.currentId) {
-        this.validate()
-      }
-    }
+    // createVariable () {
+    //   this.addVariable(this.newVariable())
+    //   this.validate()
+    // },
+    // deleteVariable () {
+    //   this.delVariable(this.currentId)
+    //   this.select(null)
+    // },
+    // find (id) {
+    //   return this.$store.state.testEditor.variables.filter(function (variable: any) {
+    //     return variable.id === id
+    //   })
+    // },
+    // findByName (name) {
+    //   if (this.$store.state.variables) { // called before initialization complete
+    //     let i
+    //     for (i = 0; i < this.$store.state.variables.length; i++) {
+    //       if (this.$store.state.variables[i].name === name) {
+    //         return i
+    //       }
+    //     }
+    //   }
+    //   return null
+    // },
+    // select (id) {
+    //   this.currentId = id
+    //   this.currentIndex = (id) ? this.$store.getters.variableIndexById(this.currentId) : null
+    //   if (this.currentId) {
+    //     this.validate()
+    //   }
+    // }
   },
   name: 'VariableEdit'
 }

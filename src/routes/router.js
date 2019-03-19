@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import TopLayout from "../components/TopLayout";
 import TestPanel from '@/components/TestPanel.vue'
+import VariableEdit from '@/components/VariableEdit.vue'
 
 
 Vue.use( VueRouter )
@@ -18,7 +19,10 @@ export const routes = [
                     testPanel: TestPanel,
                     children: [
                         {
-                            path: 'variable/:variableId'
+                            path: '/variable/:variableId',
+                            components: {
+                                VariableEdit
+                            }
                         }
                     ]
                 }

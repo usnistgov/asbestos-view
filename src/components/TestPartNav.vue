@@ -7,9 +7,12 @@
         <span style="color:blue; font-size: 0.8em"> ({{ count }})</span>
         <div v-if="open">
             <div v-for="element in elements(testId, type)" :key="element.id">
-                <div class="element-nav">
+                <!--<div class="element-nav">-->
+                    <!--{{ element.name }}-->
+                <!--</div>-->
+                <router-link class="element-nav" v-bind:to="variableUrl(element.id)">
                     {{ element.name }}
-                </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -34,6 +37,9 @@
             }
         },
         methods: {
+            variableUrl(id) {
+                return this.testId + '/variable/' + id
+            },
             addNewThingToTest() {
                 // The type of thing is this.type
 
@@ -89,6 +95,7 @@
                 })
             },
             elementsOfTest(testId, type) {
+                // retuns array of fixtures|variables|... based on type
                 let ids = []
                 this.$store.state.base.tests.forEach (function(test) {
                     ids.push(test.id)
