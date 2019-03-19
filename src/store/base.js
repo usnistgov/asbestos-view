@@ -25,12 +25,44 @@ export const baseStore = {
             state.tests.push(test)
         },
         installTestVariable(state, testDesc) {
-            // testDesc is { testId: id, variable: variable }
+            // testDesc is { testId: id, part: variable }
             const testIndex = state.tests.findIndex(function (test) {
                 return test.id === testDesc.testId
             })
             if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
-            state.tests[testIndex].variables.push(testDesc.variable)
+            state.tests[testIndex].variables.push(testDesc.part)
+        },
+        installTestFixture(state, testDesc) {
+            // testDesc is { testId: id, part: variable }
+            const testIndex = state.tests.findIndex(function (test) {
+                return test.id === testDesc.testId
+            })
+            if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
+            state.tests[testIndex].fixtures.push(testDesc.part)
+        },
+        installTestSetup(state, testDesc) {
+            // testDesc is { testId: id, part: variable }
+            const testIndex = state.tests.findIndex(function (test) {
+                return test.id === testDesc.testId
+            })
+            if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
+            state.tests[testIndex].setups.push(testDesc.part)
+        },
+        installTestTest(state, testDesc) {
+            // testDesc is { testId: id, part: variable }
+            const testIndex = state.tests.findIndex(function (test) {
+                return test.id === testDesc.testId
+            })
+            if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
+            state.tests[testIndex].tests.push(testDesc.part)
+        },
+        installTestTeardown(state, testDesc) {
+            // testDesc is { testId: id, part: variable }
+            const testIndex = state.tests.findIndex(function (test) {
+                return test.id === testDesc.testId
+            })
+            if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
+            state.tests[testIndex].teardowns.push(testDesc.part)
         }
     },
     getters: {

@@ -47,9 +47,9 @@
                     this.$store.commit('installTest', test)
 
                     const variable = newTestEle()
-                    variable.name = 'Variable One'
+                    variable.name = 'Patient'
                     variable.id = '1'
-                    this.$store.commit('installTestVariable', { testId: testId.id, variable: variable })
+                    this.$store.commit('installTestVariable', { testId: testId.id, part: variable })
                 }
             }
         }

@@ -2,7 +2,9 @@
     <div>
         <img v-if="open" src="../assets/arrow-down.png" @click="closeIt">
         <img v-else src="../assets/arrow-right.png" @click="openIt">
-        {{ capitalize(type) }} <span style="color:blue; font-size: 0.8em"> ({{ count }})</span>
+        {{ capitalize(type) }}
+        <img src="../assets/add-button.png" @click="addNewThingToTest">
+        <span style="color:blue; font-size: 0.8em"> ({{ count }})</span>
         <div v-if="open">
             <div v-for="element in elements(testId, type)" :key="element.id">
                 <div class="element-nav">
@@ -13,6 +15,8 @@
     </div>
 </template>
 <script>
+    import {newTestPart} from "../types/test";
+
     export default {
         data() {
             return {
@@ -30,6 +34,42 @@
             }
         },
         methods: {
+            addNewThingToTest() {
+                // The type of thing is this.type
+
+                // assign unique id within this test
+                const testIndex = this.thisTestIndex()
+                const vars = this.$store.state.base.tests[testIndex][this.type]
+
+                let idi = 1
+                for (let theVar of vars) {
+                    const theVarId = parseInt(theVar.id)
+                    if (theVarId > idi) {
+                        idi = theVarId
+                    }
+                }
+                const id = (idi + 1).toString()
+
+                // name follows id
+                const name = '#undefined' + id
+
+
+                const testPart = newTestPart(this.noEndS(this.type))
+                testPart.id = id
+                testPart.name = name
+
+                // store has mutations for installTestPART where
+                // PART is variables | fixtures | ...
+                // calculate PART from this.type
+                const part = this.noEndS(this.capitalize(this.type))
+                this.$store.commit('installTest' + part, { testId: this.testId, part: testPart })
+            },
+            noEndS(it) {
+                if (it.substr(-1) === 's') {
+                    it = it.slice(0, -1)
+                }
+                return it
+            },
             capitalize(it) {
                 return it.charAt(0).toUpperCase() + it.slice(1)
             },
@@ -41,6 +81,12 @@
             },
             elements(testId, type) {
                 return this.elementsOfTest(testId, type )
+            },
+            thisTestIndex() {
+                const theTestId = this.testId
+                return this.$store.state.base.tests.findIndex(function (test) {
+                    return test.id === theTestId
+                })
             },
             elementsOfTest(testId, type) {
                 let ids = []
