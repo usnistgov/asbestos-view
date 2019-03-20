@@ -172,6 +172,7 @@ export default {
 .window {
   display: grid;
   grid-template-columns: auto auto;
+  margin: 5px;
 }
 .selectors-group {
 }
