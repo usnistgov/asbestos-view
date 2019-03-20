@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import {newTest, newTestEle} from "../types/test";
+    import {newTest, newTestVariable} from "../types/test";
     import NavPanel from "./NavPanel";
 
 
@@ -46,10 +46,11 @@
                     test.name = testId.name
                     this.$store.commit('installTest', test)
 
-                    const variable = newTestEle()
+                    const variable = newTestVariable()
                     variable.name = 'Patient'
                     variable.id = '1'
-                    this.$store.commit('installTestVariable', { testId: testId.id, part: variable })
+                    variable.testId = testId.id
+                    this.$store.commit('installTestVariable', { testId: test.id, part: variable })
                 }
             }
         }

@@ -17,7 +17,7 @@
 
             }
         },
-        props: ['id'],
+        props: ['id'],  // id of test
         components: {TestPartNav},
         methods: {
 

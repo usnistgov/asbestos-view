@@ -1,7 +1,12 @@
 <template>
   <div>
-    <h2>This is Test {{ $route.params.testId }}</h2>
-    variableId is {{ $route.params.variableId }}
+    <!--route has simple ids-->
+    <div v-if="$route.params.variableId">
+      variableId is {{ $route.params.variableId }} of Test {{ $route.params.testId }}
+    </div>
+    <div v-else>
+      Test {{ $route.params.testId }}
+    </div>
   </div>
 </template>
 <script>

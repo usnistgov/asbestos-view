@@ -12,7 +12,7 @@ export function newTest () {
 }
 
 export function newTestEle () {
-    // varaible, test, etc.
+    //
     return {
         id: null,
         name: null,
@@ -20,9 +20,10 @@ export function newTestEle () {
     }
 }
 
-function newVariable () {
+export function newTestVariable () {
     return {
         id: null,
+        testId: null, // has id and name
         name: null,
         nameErr: null,
         description: null,
@@ -46,7 +47,7 @@ function newGeneralPart() {
 
 export function newTestPart(type) {
     switch (type) {
-        case 'variable': return newVariable()
+        case 'variable': return newTestVariable()
         case 'fixture': return newGeneralPart()
         case 'setup': return newGeneralPart()
         case 'test': return newGeneralPart()

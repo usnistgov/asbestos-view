@@ -7,9 +7,6 @@
         <span style="color:blue; font-size: 0.8em"> ({{ count }})</span>
         <div v-if="open">
             <div v-for="element in elements(testId, type)" :key="element.id">
-                <!--<div class="element-nav">-->
-                    <!--{{ element.name }}-->
-                <!--</div>-->
                 <router-link class="element-nav" v-bind:to="variableUrl(element.id)">
                     {{ element.name }}
                 </router-link>
@@ -28,7 +25,7 @@
             }
         },
         props: [
-            'testId',
+            'testId',  // id of test
             'type' // element of test - head, variable, setup,  teardown
             ],
         computed: {
@@ -63,6 +60,7 @@
                 const testPart = newTestPart(this.noEndS(this.type))
                 testPart.id = id
                 testPart.name = name
+                testPart.testId = this.testId
 
                 // store has mutations for installTestPART where
                 // PART is variables | fixtures | ...
@@ -123,5 +121,7 @@
         position: relative;
         left: 15px;
     }
-
+    .router-link-active {
+        background-color: lightblue;
+    }
 </style>

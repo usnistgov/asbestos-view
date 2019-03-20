@@ -24,13 +24,15 @@ export const baseStore = {
         installTest(state, test) {
             state.tests.push(test)
         },
-        installTestVariable(state, testDesc) {
-            // testDesc is { testId: id, part: variable }
+        installTestVariable(state, variableDesc) {
+            // variableDesc is { testId: id, part: variable }
+            const testId = variableDesc.testId
+            const variable = variableDesc.part
             const testIndex = state.tests.findIndex(function (test) {
-                return test.id === testDesc.testId
+                return test.id === testId
             })
-            if (testIndex === -1) { throw `Cannot find test id ${testDesc.id} in installTestVariable` }
-            state.tests[testIndex].variables.push(testDesc.part)
+            if (testIndex === -1) { throw `Cannot find test id ${testId} in installTestVariable` }
+            state.tests[testIndex].variables.push(variable)
         },
         installTestFixture(state, testDesc) {
             // testDesc is { testId: id, part: variable }
