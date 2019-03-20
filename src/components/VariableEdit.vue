@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3>Variable {{ $route.params.variableId }}</h3>
+    <!--<h3>Variable {{ variable.name }}</h3>-->
+    <!--current {{ current.name }}-->
+    <!--Route {{ $route.params.variableId }}-->
   <div class="window">
     <!--<div class="selectors-group">-->
       <!--<img src="../../assets/add-button.png" v-on:click="createVariable">-->
@@ -19,7 +21,7 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
-    <form class="grid-container" v-if="currentId">
+    <form class="grid-container">
 
       <div class="grid-status">{{ current.nameErr }}</div>
       <label for="name" class="grid-name">Name</label>
@@ -93,24 +95,24 @@
 import { mapMutations } from 'vuex'
 import {store} from "../store"
 
+const cloneDeep = require('clone-deep')
+
 export default {
   data () {
     return {
-      current: null,   // Variable being edited
-
-      // should not be  used anymore
-      currentId: true, // current variable id
-      currentIndex: null  // current variable index
+      current: cloneDeep(this.variable)
     }
   },
   store: store,
-  props: ['testContent'],
+  props: ['variable'],
+  watch: {
+    variable: function (newVal) {
+      this.current = cloneDeep(newVal)
+    }
+  },
   mounted() {
   },
   computed: {
-    // current () {
-    //   return this.$store.state.testEditor.variables[this.currentIndex]
-    // }
   },
   methods: {
     ...mapMutations({
@@ -153,45 +155,13 @@ export default {
       }
       if (count > 1) {
         this.current.expressionErr = 'Only one of expression, headerField, or path may be defined'
-      } else if (count == 0) {
+      } else if (count === 0) {
         this.current.expressionErr = 'One of expression, headerField, or path must be defined'
       } else {
         this.current.expressionErr = null
       }
       if (this.current.expressionErr) { this.current.validates = false }
     },
-
-    // createVariable () {
-    //   this.addVariable(this.newVariable())
-    //   this.validate()
-    // },
-    // deleteVariable () {
-    //   this.delVariable(this.currentId)
-    //   this.select(null)
-    // },
-    // find (id) {
-    //   return this.$store.state.testEditor.variables.filter(function (variable: any) {
-    //     return variable.id === id
-    //   })
-    // },
-    // findByName (name) {
-    //   if (this.$store.state.variables) { // called before initialization complete
-    //     let i
-    //     for (i = 0; i < this.$store.state.variables.length; i++) {
-    //       if (this.$store.state.variables[i].name === name) {
-    //         return i
-    //       }
-    //     }
-    //   }
-    //   return null
-    // },
-    // select (id) {
-    //   this.currentId = id
-    //   this.currentIndex = (id) ? this.$store.getters.variableIndexById(this.currentId) : null
-    //   if (this.currentId) {
-    //     this.validate()
-    //   }
-    // }
   },
   name: 'VariableEdit'
 }

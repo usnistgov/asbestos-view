@@ -34,6 +34,21 @@ export const baseStore = {
             if (testIndex === -1) { throw `Cannot find test id ${testId} in installTestVariable` }
             state.tests[testIndex].variables.push(variable)
         },
+        updateTestVariable(state, variable) {
+            const testId = variable.testId
+            const variableId = variable.id
+
+            const testIndex = state.tests.findIndex(function (test) {
+                return test.id === testId
+            })
+            if (testIndex === -1) { throw `Cannot find test id ${testId} in updateTestVariable` }
+
+            const variableIndex = state.tests[testIndex].variables.findIndex( function (vari) {
+                return vari.id === variableId
+            })
+            if (variableIndex === -1) { throw `Cannot find variable id ${variableId} in test ${testId} in updateTestVariable` }
+            state.tests[testIndex].variables[variableIndex] = variable
+        },
         installTestFixture(state, testDesc) {
             // testDesc is { testId: id, part: variable }
             const testIndex = state.tests.findIndex(function (test) {

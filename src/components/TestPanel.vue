@@ -2,7 +2,7 @@
   <div>
     <!--route has simple ids-->
     <div v-if="$route.params.variableId">
-      variableId is {{ $route.params.variableId }} of Test {{ $route.params.testId }}
+      <variable-edit :variable="thisVariable()"></variable-edit>
     </div>
     <div v-else>
       Test {{ $route.params.testId }}
@@ -11,6 +11,34 @@
 </template>
 <script>
 
+  import VariableEdit from "./VariableEdit";
+
+  export default {
+    data () {
+      return {
+
+      }
+    },
+    components: { VariableEdit },
+    methods: {
+      thisVariable() {
+        const variableId = this.$route.params.variableId
+        const testId = this.$route.params.testId
+
+        const testIndex = this.$store.state.base.tests.findIndex(function (test) {
+          return test.id === testId
+        })
+        if (testIndex === -1) { throw `Cannot find test id ${testId} in TestPanel` }
+
+        const variableIndex = this.$store.state.base.tests[testIndex].variables.findIndex( function (vari) {
+          return vari.id === variableId
+        })
+        if (variableIndex === -1) { throw `Cannot find variable id ${variableId} in test ${testId} in TestPanel` }
+
+        return this.$store.state.base.tests[testIndex].variables[variableIndex]
+      }
+    }
+  }
 </script>
 <style scoped>
   .main {
