@@ -1,11 +1,13 @@
 <template>
   <div>
     <!--route has simple ids-->
-    <div v-if="$route.params.variableId">
-      <variable-edit :variable="thisVariable()"></variable-edit>
-    </div>
-    <div v-else>
-      Test {{ $route.params.testId }}
+    <div v-if="variableSelectionValid">
+      <div v-if="$route.params.variableId">
+        <variable-edit :variable="thisVariable()"></variable-edit>
+      </div>
+      <div v-else>
+        Test {{ $route.params.testId }}
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +22,23 @@
       }
     },
     components: { VariableEdit },
+    computed: {
+      variableSelectionValid() {
+        const variableId = this.$route.params.variableId
+        const testId = this.$route.params.testId
+
+        const testIndex = this.$store.state.base.tests.findIndex(function (test) {
+          return test.id === testId
+        })
+        if (testIndex === -1) { return false }
+
+        const variableIndex = this.$store.state.base.tests[testIndex].variables.findIndex( function (vari) {
+          return vari.id === variableId
+        })
+        if (variableIndex === -1) { return false }
+        return true
+      }
+    },
     methods: {
       thisVariable() {
         const variableId = this.$route.params.variableId

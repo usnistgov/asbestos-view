@@ -23,18 +23,15 @@ export function newTestEle () {
 export function newTestVariable () {
     return {
         id: null,
-        testId: null, // has id and name
+        testId: null, // why?
         name: null,
-        nameErr: null,
         description: null,
         defaultValue: null,
         expression: null,
-        expressionErr: null,
         headerField: null,
         hint: null,
         path: null,
         sourceId: null,
-        validates: false
     }
 }
 

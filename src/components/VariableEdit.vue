@@ -1,29 +1,9 @@
 <template>
   <div>
-    <!--<h3>Variable {{ variable.name }}</h3>-->
-    <!--current {{ current.name }}-->
-    <!--Route {{ $route.params.variableId }}-->
   <div class="window">
-    <!--<div class="selectors-group">-->
-      <!--<img src="../../assets/add-button.png" v-on:click="createVariable">-->
-      <!--<img v-if="this.$store.state.testEditor.variables" src="../../assets/exclude-button-red.png" v-on:click="deleteVariable">-->
-      <!--<div v-if="this.$store.state.testEditor.variables === 0">-->
-        <!--No Variables Defined-->
-      <!--</div>-->
-      <!--<div v-else>-->
-        <!--<div v-for="variable in this.$store.state.testEditor.variables">-->
-          <!--<span v-if="variable.validates">-->
-            <!--<button class="selector" @click="select(variable.id)">{{ variable.name }}</button>-->
-          <!--</span>-->
-          <!--<span v-else>-->
-            <!--<button class="selector haserror" @click="select(variable.id)">{{ variable.name }}</button>-->
-          <!--</span>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
     <form class="grid-container">
 
-      <div class="grid-status">{{ current.nameErr }}</div>
+      <div class="grid-status">{{ nameErr }}</div>
       <label for="name" class="grid-name">Name</label>
       <input id="name" class="grid-item" v-on:blur="validate" v-model="current.name">
 
@@ -51,7 +31,7 @@
       <label for="sourceId" class="grid-name">SourceId</label>
       <input id="sourceId" class="grid-item space-after" v-on:blur="validate" v-model="current.sourceId">
 
-      <div class="grid-status yellow-background">{{ current.expressionErr }}</div>
+      <div class="grid-status yellow-background">{{ expressionErr }}</div>
       <div class="grid-documentation yellow-background bold-font">One of...</div>
       <div class="grid-documentation yellow-background"></div>
       <div class="grid-documentation yellow-background">The FHIRPath expression against the fixture body. If headerField is defined,
@@ -100,14 +80,21 @@ const cloneDeep = require('clone-deep')
 export default {
   data () {
     return {
-      current: cloneDeep(this.variable)
+      current: cloneDeep(this.variable),
+      nameErr: null,
+      expressionErr: null,
+      validates: true,
     }
   },
   store: store,
   props: ['variable'],
+  created: function () {
+    this.validate()
+  },
   watch: {
     variable: function (newVal) {
       this.current = cloneDeep(newVal)
+      this.validate()
     }
   },
   mounted() {
@@ -125,9 +112,9 @@ export default {
       // }
       // console.log('current is ' + this.currentIndex)
       // let variable = this.$store.state.testEditor.variables[this.currentIndex]
-      this.current.nameErr = null
-      this.current.expressionErr = null
-      this.current.validates = true
+      this.nameErr = null
+      this.expressionErr = null
+      this.validates = true
     },
     validate () {
       // if (!this.currentId) {
@@ -136,12 +123,12 @@ export default {
       this.clearErrors()
       // let variable = this.$store.state.testEditor.variables[this.currentIndex]
       if (!this.current.name) {
-        this.current.nameErr = 'Name required'
+        this.nameErr = 'Name required'
         this.current.validates = false
       }
       if (this.current.name && this.current.name.startsWith('#')) {
-        this.current.nameErr = 'Enter real name'
-        this.current.validates = false
+        this.nameErr = 'Enter real name'
+        this.validates = false
       }
       let count = 0
       if (this.current.expression) {
@@ -154,13 +141,13 @@ export default {
         count++
       }
       if (count > 1) {
-        this.current.expressionErr = 'Only one of expression, headerField, or path may be defined'
+        this.expressionErr = 'Only one of expression, headerField, or path may be defined'
       } else if (count === 0) {
-        this.current.expressionErr = 'One of expression, headerField, or path must be defined'
+        this.expressionErr = 'One of expression, headerField, or path must be defined'
       } else {
-        this.current.expressionErr = null
+        this.expressionErr = null
       }
-      if (this.current.expressionErr) { this.current.validates = false }
+      if (this.expressionErr) { this.validates = false }
     },
   },
   name: 'VariableEdit'
