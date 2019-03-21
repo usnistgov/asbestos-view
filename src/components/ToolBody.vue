@@ -49,7 +49,7 @@
                     const variable = newTestVariable()
                     variable.name = 'Patient'
                     variable.id = '1'
-                    variable.testId = testId.id
+                     //variable.testId = testId.id
                     this.$store.commit('installTestVariable', { testId: test.id, part: variable })
                 }
             }

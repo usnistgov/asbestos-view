@@ -23,7 +23,7 @@ export function newTestEle () {
 export function newTestVariable () {
     return {
         id: null,
-        testId: null, // why?
+        //testId: null, // why?
         name: null,
         description: null,
         defaultValue: null,

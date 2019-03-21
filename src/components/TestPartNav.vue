@@ -60,7 +60,7 @@
                 const testPart = newTestPart(this.noEndS(this.type))
                 testPart.id = id
                 testPart.name = name
-                testPart.testId = this.testId
+                //testPart.testId = this.testId
 
                 // store has mutations for installTestPART where
                 // PART is variables | fixtures | ...
