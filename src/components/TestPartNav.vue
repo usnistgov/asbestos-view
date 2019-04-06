@@ -39,9 +39,10 @@
             },
             addNewThingToTest() {
                 // The type of thing is this.type
+                // this is hung off UI button
 
                 // assign unique id within this test
-                const testIndex = this.thisTestIndex()
+                const testIndex = this.assignTestIndex()
                 const vars = this.$store.state.base.tests[testIndex][this.type]
 
                 let idi = 1
@@ -86,7 +87,7 @@
             elements(testId, type) {
                 return this.elementsOfTest(testId, type )
             },
-            thisTestIndex() {
+            assignTestIndex() {
                 const theTestId = this.testId
                 return this.$store.state.base.tests.findIndex(function (test) {
                     return test.id === theTestId
